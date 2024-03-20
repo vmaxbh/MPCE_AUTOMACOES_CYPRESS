@@ -1,0 +1,5 @@
+import './commands'
+import './3-commandEncerrarNomeacao'
+import './2-commanddesbloquearPosicoes'
+import './4-commandPublicVagaEstagio'
+import 'cypress-iframe'
