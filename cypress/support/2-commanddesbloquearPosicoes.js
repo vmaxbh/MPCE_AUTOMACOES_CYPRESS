@@ -18,7 +18,7 @@ Cypress.Commands.add('iframe_1_Posicao', () => {
     });
 });
 
-Cypress.Commands.add('iframe_2_selePosicao', () => {
+Cypress.Commands.add('iframe_2_selePosicao', (nome) => {
     // Seleciona os iframes
     cy.get('#slotId_5a27e943642bd12b6de3239c > .view > .view-content > iframe').first().then(($iframe) => {
         // Faz o Cypress focar no iframe
@@ -30,15 +30,15 @@ Cypress.Commands.add('iframe_2_selePosicao', () => {
                 cy.get('.object-list-container.view-container')
                 .find('input.list-search[title="Filtrar por nome"]')
                 .each(($input) => {
-                    cy.wrap($input).type('Estagiário (ID-7){enter}');
+                    // Usa o parâmetro 'nome' para preencher o campo de pesquisa
+                    cy.wrap($input).clear().type(nome);
                     cy.wait(1000)
-                    cy.contains('Estagiário (ID-7)', {timeout:10000}).click();
+                    // Supondo que você queira clicar em um elemento que contém o nome passado como argumento
+                    cy.contains(nome, {timeout:10000}).click();
                     cy.wait(3000)
-                    
                 });
             });
         });
-          
     });
 });
 
@@ -49,7 +49,7 @@ Cypress.Commands.add('iframe_3_desativPosicao', () => {
                 
         cy.wrap(iframeDocument.body).should('be.visible').then(() => {
             cy.wrap(iframeDocument.body).within(() => {
-                cy.get('button.sy-fab.sy-fab-dark.sy-fab-floating[title="Atualizar"]').should('be.visible').click();
+                cy.get('button.sy-fab.sy-fab-dark.sy-fab-floating[title="Atualizar"]', {timeout:6000}).should('be.visible').click();
                 cy.wait(1000)
                 cy.get('button.sy-btn.sy-btn-icon-left.sy-btn-success.sy-btn-lg.sy-btn-floating').then(($button) => {
                     if ($button.length > 0) {
@@ -61,13 +61,15 @@ Cypress.Commands.add('iframe_3_desativPosicao', () => {
                     }
                    });
                 cy.wait(2000)
-                cy.xpath('/html/body/sy-root/div/sy-draft-edit/div[2]/div/div[2]/div[2]/form/sy-fields/div/div/div[6]/sy-field/fieldset/div/sy-single-field/div/div/div/sy-input-embedded-reference/div[2]/sy-fields/div/div/div[16]/sy-field/fieldset/div/sy-single-field/sy-input-boolean/div/label').click();
+                cy.xpath('/html/body/sy-root/div/sy-draft-edit/div[2]/div/div[2]/div[2]/form/sy-fields/div/div/div[6]/sy-field/fieldset/div/sy-single-field/div/div/div/sy-input-embedded-reference/div[2]/sy-fields/div/div/div[16]/sy-field/fieldset/div/sy-single-field/sy-input-boolean/div/label', {timeout:6000}).click();
                 cy.wait(1000)
                 cy.get('button#publish-button.sy-fab.sy-fab-success.sy-fab-floating').click();
             });
         });
     });
 });
+
+
 
 Cypress.Commands.add('iframe_3_BloquearPosicao', () => {
     cy.get('sy-slot#slotId_5a27e943642bd12b6de3239d > .view > .view-content > iframe').then(($iframe) => {
