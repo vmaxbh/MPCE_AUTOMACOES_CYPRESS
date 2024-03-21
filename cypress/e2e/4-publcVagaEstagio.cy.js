@@ -1,3 +1,4 @@
+require('cypress-xpath')
 describe('4.	Abrir um ticket de Publicar de Vagas de Estágio', () => {
     beforeEach(() => {
       cy.LoginTeste()
