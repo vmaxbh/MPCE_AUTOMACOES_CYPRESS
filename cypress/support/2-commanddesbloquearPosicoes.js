@@ -93,18 +93,32 @@ Cypress.Commands.add('iframe_3_BloquearPosicao', () => {
             cy.wrap(iframeDocument.body).within(() => {
                 cy.get('button.sy-fab.sy-fab-dark.sy-fab-floating[title="Atualizar"]').should('be.visible').click();
                 cy.wait(1000)
-                cy.get('button.sy-btn.sy-btn-icon-left.sy-btn-success.sy-btn-lg.sy-btn-floating').then(($button) => {
+                cy.get('button.sy-btn.sy-btn-icon-left.sy-btn-success.sy-btn-lg.sy-btn-floating', { timeout: 5000 })
+                .then(($button) => {
+                    // Verifica se o botão existe
                     if ($button.length > 0) {
-                       // Se o botão existir, clique nele
-                       cy.wrap($button).contains('Sim').click();
+                        // Tenta interagir com o botão apenas se ele estiver visível
+                        cy.wrap($button).then(($visibleButton) => {
+                            if ($visibleButton.is(':visible')) {
+                                // Se o botão estiver visível, clique nele
+                                cy.wrap($visibleButton).contains('Sim').click();
+                            } else {
+                                // Se o botão não estiver visível, registre uma mensagem e retorne
+                                cy.log('Botão não visível, passando para a próxima etapa.');
+                                return;
+                            }
+                        });
                     } else {
-                       // Se o botão não existir, retorne para passar para o próximo passo
-                       return;
+                        // Se o botão não existir, registre uma mensagem e retorne
+                        cy.log('Botão não encontrado, passando para a próxima etapa.');
+                        return;
                     }
-                   });
+                });
                 cy.wait(3000)
-                cy.xpath('/html/body/sy-root/div/sy-draft-edit/div[2]/div/div[2]/div[2]/form/sy-fields/div/div/div[6]/sy-field/fieldset/div/sy-single-field/div/div/div/sy-input-embedded-reference/div[2]/sy-fields/div/div/div[16]/sy-field/fieldset/div/sy-single-field/sy-input-boolean/div/label/span').dblclick();
-                cy.wait(1000)
+                cy.xpath('/html/body/sy-root/div/sy-draft-edit/div[2]/div/div[2]/div[2]/form/sy-fields/div/div/div[6]/sy-field/fieldset/div/sy-single-field/div/div/div/sy-input-embedded-reference/div[2]/sy-fields/div/div/div[16]/sy-field/fieldset/div/sy-single-field/sy-input-boolean/div/label/span').click();
+                cy.wait(2000)
+                cy.xpath('/html/body/sy-root/div/sy-draft-edit/div[2]/div/div[2]/div[2]/form/sy-fields/div/div/div[6]/sy-field/fieldset/div/sy-single-field/div/div/div/sy-input-embedded-reference/div[2]/sy-fields/div/div/div[16]/sy-field/fieldset/div/sy-single-field/sy-input-boolean/div/label/span').click();
+                cy.wait(2000)
                 cy.get('button#publish-button.sy-fab.sy-fab-success.sy-fab-floating').click();
             });
         });

@@ -15,7 +15,7 @@ Cypress.Commands.add('LoginTeste', (usuario = Cypress.env('USERNAME'), senha = C
 const XLSX = require('xlsx');
 
 Cypress.Commands.add('readExcel', (filePath, sheetName) => {
- cy.readFile(filePath, 'binary').then((data) => {
+ cy.readFile(filePath, 'binary', {timeout: 10000}).then((data) => {
     const workbook = XLSX.read(data, { type: 'binary' });
     const worksheet = workbook.Sheets[sheetName];
     const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });

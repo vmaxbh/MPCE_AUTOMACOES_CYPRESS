@@ -45,7 +45,7 @@ Cypress.Commands.add('iframe_1_PublicVaga', (nome) => {
                 cy.log('Lista de cargos visível na Interface!');
                 });
                 cy.wait(3000)
-                //cy.get('#publish-button').click();
+                cy.get('#publish-button').click();
                 cy.wait(3000)
                 
  
