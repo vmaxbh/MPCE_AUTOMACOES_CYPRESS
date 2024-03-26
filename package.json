@@ -4,7 +4,7 @@
   "description": "Projeto de Automações Projeto MPCE (Ministério Público do Ceará)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx cypress open"
   },
   "author": "Maxwell Viana",
   "license": "ISC",

@@ -1,4 +1,4 @@
-import 'cypress-iframe';
+require('cypress-xpath')
 
 
 Cypress.Commands.add('iframe_1_navEncerrNomeacao', () => {
@@ -89,7 +89,9 @@ Cypress.Commands.add('iframe_2_3', () => {
               cy.wait(1000)
               cy.contains('Encerrar Processo').click({force:true});
               cy.wait(3000)
-              cy.get('body > sy-root > div > sy-draft-edit > div.sy-object-edit-container.view-container > div > div.sy-form-row > div.sy-central-column > form > sy-fields > div > div > div.fields-container.sy-grid-col-md.ng-star-inserted > sy-field > fieldset > div > sy-input-option-values > div > p-selectbutton > div > sy-tooltip-card > span > button').click({force:true});
+              cy.xpath('/html/body/sy-root/div/sy-draft-edit/div[2]/div/div[2]/div[2]/form/sy-fields/div/div/div[4]/sy-field/fieldset/div/sy-input-option-values/div/p-selectbutton/div/sy-tooltip-card[1]/span[2]/button')
+                .invoke('show') // Isso é apenas um exemplo. 'show' não é uma função real. Use uma função real conforme necessário.
+                .click({force:true});
               
               
               cy.wait(5000)

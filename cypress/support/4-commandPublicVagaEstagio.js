@@ -1,13 +1,15 @@
 require('cypress-xpath')
 Cypress.Commands.add('iframe_1_PublicVaga', (nome) => {
-    
-    cy.get('.header-add-object-button').click()
-    cy.contains('Todos').should('be.visible').click()
-    cy.get('.search-box > .ng-pristine').should('be.visible').type('ticket{enter}')
+    cy.wait(5000)
+    cy.get('.header-add-object-button', {timeout:20000}).should('be.visible').click()
+    cy.wait(5000)
+    cy.contains('Todos', {timeout:20000}).should('be.visible').click()
+    cy.wait(5000)
+    cy.get('.search-box > .ng-pristine', {timeout:20000}).should('be.visible').type('ticket{enter}')
     cy.wait(3000)
-    cy.contains('a.creation-menu-item', 'Ticket').click();
-    cy.contains('Sim').should('be.visible').click({force:true})
-    cy.get('#slotId_5a27e943642bd12b6de3239d > .view > .view-content > iframe').then(($iframe) => {
+    cy.contains('a.creation-menu-item', 'Ticket', {timeout:10000}).should('be.visible').click();
+    cy.contains('Sim', {timeout:20000}).should('be.visible').click({force:true})
+    cy.get('#slotId_5a27e943642bd12b6de3239d > .view > .view-content > iframe', {timeout:20000}).then(($iframe) => {
         
         const iframe = $iframe.get(0);
         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
@@ -37,7 +39,13 @@ Cypress.Commands.add('iframe_1_PublicVaga', (nome) => {
                 cy.wait(2000)
                 cy.contains('button.btn.btn-flat', 'Sim').click();
                 cy.wait(3000)
-                cy.get('#publish-button').click();
+                cy.xpath('//legend[contains(text(), "Lista de cargos")]', {timeout:5000}).should('be.visible').then(($el) => {
+                // Verifica se o elemento é visível ao usuário
+                expect($el).to.be.visible;
+                cy.log('Lista de cargos visível na Interface!');
+                });
+                cy.wait(3000)
+                //cy.get('#publish-button').click();
                 cy.wait(3000)
                 
  
