@@ -7,7 +7,7 @@ Cypress.Commands.add('iframe_1_PublicVaga', (nome) => {
     cy.wait(5000)
     cy.get('.search-box > .ng-pristine', {timeout:20000}).should('be.visible').type('ticket{enter}')
     cy.wait(3000)
-    cy.contains('a.creation-menu-item', 'Ticket', {timeout:10000}).should('be.visible').click();
+    cy.contains('a.creation-menu-item:visible', 'Ticket', {timeout:10000}).should('be.visible').click();
     cy.contains('Sim', {timeout:20000}).should('be.visible').click({force:true})
     cy.get('#slotId_5a27e943642bd12b6de3239d > .view > .view-content > iframe', {timeout:20000}).then(($iframe) => {
         
